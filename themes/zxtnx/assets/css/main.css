@@ -15,6 +15,49 @@ body {
   color: #FFFFFF;
   margin: 0;
   padding: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+button {
+  color: #FFFFFF;
+}
+
+button[disabled] {
+  color: #4B4B4B;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* Couleur de surlignement par défaut */
+::selection {
+  background: #d1d1d1;
+  color: #000;
+}
+
+/* Reverse Engineering */
+body.reverse-engineering-selection ::selection {
+  background: #a371f7; /* Violet */
+  color: #fff;
+}
+
+/* Game Hacking */
+body.game-hacking-selection ::selection {
+  background: #0077ff; /* Bleu */
+  color: #fff;
+}
+
+/* Binary Exploitation */
+body.binary-exploitation-selection ::selection {
+  background: #ff4d4d; /* Rouge */
+  color: #fff;
+}
+
+.mainContent {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  height: 100%;
 }
 
 .globalMenu__desktop {
@@ -73,6 +116,63 @@ body {
   border-right: 1px solid #333;
 }*/
 
+
+.postNavigation {
+  display: flex;
+  gap: 24px;
+  margin-top: 1rem;
+}
+
+.postNavigation__prev,
+.postNavigation__next {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0.5rem;
+  border: none;
+  background: none;
+  color: #FFFFFF;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: color 0.3s ease, opacity 0.3s ease;
+  user-select: none;
+}
+
+.postNavigation__prev[disabled],
+.postNavigation__next[disabled] {
+  color: #4B4B4B;
+  cursor: not-allowed;
+}
+
+.postNavigation__icon {
+  display: block;
+  margin-bottom: 0.2rem;
+  width: 45px;
+  height: 16px;
+}
+
+.postNavigation__text {
+  position: relative;
+  font-size: 0.9rem;
+}
+
+.postNavigation__icon,
+.postNavigation__text {
+  user-select: none;
+}
+
+.postNavigation__prev[disabled] .postNavigation__icon path,
+.postNavigation__next[disabled] .postNavigation__icon path {
+  fill: #4B4B4B;
+}
+
+.postNavigation__prev .postNavigation__icon path,
+.postNavigation__next .postNavigation__icon path {
+  fill: currentColor; /* Utilise la couleur courante du texte */
+}
+
 /* Style des liens */
 .globalMenu__mobile .globalMenu__link {
   color: #FFFFFF;
@@ -94,6 +194,117 @@ body {
 .globalMenu__mobile .globalMenu__link:hover {
   color: #FFFFFF;
   background-color: #7700C7;
+}
+
+.latestPost {
+  display: flex;
+  position: relative;
+  height: 100%;
+}
+
+.leftContainer {
+  width: 14%;
+}
+
+.latestPost__container {
+  margin-right: 37.71%;
+  margin-left: 7.71%;
+  flex: 1;
+}
+
+.postsCarousel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 16%;
+}
+
+.tableOfContents {
+  position: fixed;
+  right: 0;
+  height: 100%;
+  width: 14%;
+  background: #1c1c1c;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-right: 16%;
+}
+
+.tableOfContents::before {
+  content: "";
+  top: 0;
+  left: 10px; /* Ajuste pour aligner avec le contenu */
+  width: 2px; /* Largeur de la ligne */
+  margin-left: 24px;
+  margin-right: 16px;
+  height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    #666,
+    #666 5px,
+    transparent 5px,
+    transparent 10px
+  );
+  z-index: -1; /* Place derrière le texte */
+}
+
+.tableOfContents a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.tableOfContents a.active {
+  font-weight: bold;  
+}
+
+.tableOfContents h3 {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.tableOfContents nav ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.tableOfContents ul {
+  list-style: none; /* Supprime les puces */
+  margin: 0;
+  padding: 0;
+  margin-left: 20px;
+}
+
+.tableOfContents ul ul {
+  margin-left: 20px; /* Décale les sous-niveaux */
+}
+
+.tableOfContents nav ul li {
+  margin-bottom: 5px;
+}
+
+.tableOfContents nav ul li a {
+  color: #aaa;
+  text-decoration: none;
+}
+
+.tableOfContents nav ul li a:hover {
+  color: white;
+}
+
+.tableOfContents nav ul li a.active {
+  font-weight: bold;
+  color: white;
+}
+
+.tableOfContents nav a {
+  color: #aaa;
+  text-decoration: none;
+}
+
+.tableOfContents nav a.active {
+  font-weight: bold;
+  color: white;
 }
 
 /* Pour les écrans de petite taille (mobile), inverser l'affichage */

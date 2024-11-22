@@ -7,12 +7,53 @@
 
     <!-- On récupère les posts filtrés par catégorie et tag -->
     {{ $filteredPosts := where 
-      (where .Site.Pages "Params.categories" "intersect" (slice $defaultCategory)) 
-      "Params.tags" "intersect" (slice $defaultTag) }}
-
+      (where .Site.RegularPages "Params.categories" "intersect" (slice $defaultCategory)) 
+      "Params.tags" "intersect" (slice $defaultTag) }}    
+    
+    <script>
+      const postsData = [
+        {{ range .Site.RegularPages }}
+          {
+            "Title": "{{ .Title }}",
+            "Content": {{ .Content }},
+            "Date": "{{ .Date }}",
+            "Thumbnail": "{{ with .Params.thumbnail }}{{ . }}{{ end }}",
+            "RelPermalink": "{{ .RelPermalink }}",
+            "Tags": {{ .Params.tags }},
+            "Category": "{{ with .Params.categories }}{{ index . 0 }}{{ end }}",
+            "TableOfContents": {{ .TableOfContents }}
+          },
+        {{ end }}
+      ];
+      const defaultTag = "{{ $defaultTag }}";
+      const defaultCategory = "{{ $defaultCategory }}";
+      const avatarMap = {{ site.Data.avatars }};
+      console.log("Posts Data: ", postsData);
+      console.log("Default Tag: ", defaultTag);
+      console.log("Avatar Map: ", avatarMap);
+    </script>   
     <!-- Vérifie si la liste est vide avant d'extraire le dernier post -->
     {{ if gt (len $filteredPosts) 0 }}
       {{ $latestPost := index $filteredPosts 0 }}
+
+      <!-- Récupérer l'index du post actuellement affiché -->
+      {{ $currentIndex := 0 }}
+      {{ range $index, $post := $filteredPosts }}
+        {{ if eq $post $latestPost }}
+          {{ $currentIndex = $index }}
+        {{ end }}
+      {{ end }}
+
+      <!-- Calculer les posts Previous et Next -->
+      {{ $prevPost := "" }}
+      {{ $nextPost := "" }}
+
+      {{ if gt $currentIndex 0 }}
+        {{ $prevPost = index $filteredPosts (sub $currentIndex 1) }}
+      {{ end }}
+      {{ if lt $currentIndex (sub (len $filteredPosts) 1) }}
+        {{ $nextPost = index $filteredPosts (add $currentIndex 1) }}
+      {{ end }}
 
       <!-- Récupérer l'avatar correspondant -->
       {{ $defaultAvatar := index $avatarMap $defaultTag }}
@@ -34,6 +75,46 @@
         "AvatarAlt" $avatarAlt) }}
 
       <section class="latestPost">
+        <div class="leftContainer">
+          <nav class="globalMenu__desktop">
+            {{ partial "desktop-menu.html" (dict "menuID" "main" "page" .) }}
+          </nav>
+          <!-- Switch lights (theme) -->
+          <div class="switchLights">
+            Lumière
+          </div>
+          <!-- Ajouter Previous et Next -->
+          <div class="postNavigation">
+            <button id="prevPost" 
+                    class="postNavigation__prev" 
+                    data-index="{{ sub $currentIndex 1 }}" 
+                    {{ if le $currentIndex 0 }}disabled{{ end }}>
+              <span class="postNavigation__icon">
+                <svg width="45" height="16" viewBox="0 0 45 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0.292893 7.29289C-0.0976311 7.68342 -0.0976311 8.31658 0.292893 8.70711L6.65685 15.0711C7.04738 15.4616 7.68054 15.4616 8.07107 15.0711C8.46159 14.6805 8.46159 14.0474 8.07107 13.6569L2.41421 8L8.07107 2.34315C8.46159 1.95262 8.46159 1.31946 8.07107 0.928932C7.68054 0.538408 7.04738 0.538408 6.65685 0.928932L0.292893 7.29289ZM45 7L1 7V9L45 9V7Z"/>
+                </svg>
+              </span>
+              <span class="postNavigation__text">
+                prev
+              </span>
+            </button>
+            <button id="nextPost" 
+                    class="postNavigation__next" 
+                    data-index="{{ add $currentIndex 1 }}" 
+                    {{ if ge $currentIndex (sub (len $filteredPosts) 1) }}disabled{{ end }}>
+              <span class="postNavigation__icon">
+                <svg width="45" height="16" viewBox="0 0 45 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M44.7071 7.29289C45.0976 7.68342 45.0976 8.31658 44.7071 8.70711L38.3431 15.0711C37.9526 15.4616 37.3195 15.4616 36.9289 15.0711C36.5384 14.6805 36.5384 14.0474 36.9289 13.6569L42.5858 8L36.9289 2.34315C36.5384 1.95262 36.5384 1.31946 36.9289 0.928932C37.3195 0.538408 37.9526 0.538408 38.3431 0.928932L44.7071 7.29289ZM0 7L44 7V9L0 9L0 7Z"/>
+                </svg>
+              </span>
+              <span class="postNavigation__text">
+                next
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Article principal -->
         <article class="latestPost__container">
           <!-- Afficher la thumbnail -->
           {{ with $latestPost.Params.thumbnail }}
@@ -49,31 +130,28 @@
             {{ $latestPost.Content }}
           </div>
         </article>
+
+        <!-- Table des matières -->
+        <aside class="tableOfContents">
+          <h3>Contents</h3>
+          <nav>
+            {{ $latestPost.TableOfContents }}
+          </nav>
+        </aside>
+
+        <!-- Affiche les posts en carousel -->
+        <section class="postsCarousel">
+          {{ range .Site.RegularPages }}
+            {{ partial "post-carousel.html" (dict 
+              "thumbnail" .Params.thumbnail 
+              "title" .Title 
+              "summary" .Summary 
+              "permalink" .RelPermalink) }}
+          {{ end }}
+          <a href="{{ .RelPermalink }}" class="postsCarousel__expand">
+            See Posts
+          </a>
+        </section>
       </section>
-
-    {{ else }}
-      <!-- Si aucun post trouvé -->
-      {{ $defaultAvatar := index $avatarMap $defaultTag }}
-      {{ $avatarImage := index $defaultAvatar "image" }}
-      {{ $avatarAlt := index $defaultAvatar "alt" }}
-      {{ partial "hero.html" (dict
-        "Category" $defaultCategory 
-        "Tag" $defaultTag 
-        "AvatarImage" $avatarImage 
-        "AvatarAlt" $avatarAlt) }}
-      <p>No posts found in {{ $defaultCategory }} with the tag {{ $defaultTag }}.</p>
     {{ end }}
-
-  <section class="postsCarousel">
-    {{ range .Site.RegularPages }}
-      {{ partial "post-carousel.html" (dict 
-        "thumbnail" .Params.thumbnail 
-        "title" .Title 
-        "summary" .Summary 
-        "permalink" .RelPermalink) }}
-    {{ end }}
-    <a href="{{ .RelPermalink }}" class="postsCarousel__expand">
-      See Posts
-    </a>
-  </section>
 {{ end }}
