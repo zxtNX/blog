@@ -1,0 +1,79 @@
+{{ define "main" }}
+    <!-- Variables par défaut : catégorie et tag -->
+    {{ $defaultCategory := "EntityTutorials" }}
+    {{ $defaultTag := "Reverse-Engineering" }}
+
+    {{ $avatarMap := site.Data.avatars }}
+
+    <!-- On récupère les posts filtrés par catégorie et tag -->
+    {{ $filteredPosts := where 
+      (where .Site.Pages "Params.categories" "intersect" (slice $defaultCategory)) 
+      "Params.tags" "intersect" (slice $defaultTag) }}
+
+    <!-- Vérifie si la liste est vide avant d'extraire le dernier post -->
+    {{ if gt (len $filteredPosts) 0 }}
+      {{ $latestPost := index $filteredPosts 0 }}
+
+      <!-- Récupérer l'avatar correspondant -->
+      {{ $defaultAvatar := index $avatarMap $defaultTag }}
+      {{ $avatarImage := $defaultAvatar.image }}
+      {{ $avatarAlt := $defaultAvatar.alt }}
+      
+      {{ range $latestPost.Params.tags }}
+        {{ with index $avatarMap . }}
+          {{ $avatarImage = index . "image" }}
+          {{ $avatarAlt = index . "alt" }}
+        {{ end }}
+      {{ end }}
+      
+      <!-- Affiche les détails du dernier post -->
+      {{ partial "hero.html" (dict
+        "Category" (index $latestPost.Params.categories 0) 
+        "Tag" $defaultTag 
+        "AvatarImage" $avatarImage 
+        "AvatarAlt" $avatarAlt) }}
+
+      <section class="latestPost">
+        <article class="latestPost__container">
+          <!-- Afficher la thumbnail -->
+          {{ with $latestPost.Params.thumbnail }}
+            <img src="{{ . }}" alt="Thumbnail for {{ $latestPost.Title }}" class="latestPost__thumbnail">
+          {{ end }}
+
+          <!-- Afficher le titre -->
+          <h1 class="latestPost__title">{{ $latestPost.Title }}</h1>
+          <p>{{ $latestPost.Date.Format "2 January 2006" }}</p>
+
+          <!-- Contenu du post -->
+          <div class="latestPost__content">
+            {{ $latestPost.Content }}
+          </div>
+        </article>
+      </section>
+
+    {{ else }}
+      <!-- Si aucun post trouvé -->
+      {{ $defaultAvatar := index $avatarMap $defaultTag }}
+      {{ $avatarImage := index $defaultAvatar "image" }}
+      {{ $avatarAlt := index $defaultAvatar "alt" }}
+      {{ partial "hero.html" (dict
+        "Category" $defaultCategory 
+        "Tag" $defaultTag 
+        "AvatarImage" $avatarImage 
+        "AvatarAlt" $avatarAlt) }}
+      <p>No posts found in {{ $defaultCategory }} with the tag {{ $defaultTag }}.</p>
+    {{ end }}
+
+  <section class="postsCarousel">
+    {{ range .Site.RegularPages }}
+      {{ partial "post-carousel.html" (dict 
+        "thumbnail" .Params.thumbnail 
+        "title" .Title 
+        "summary" .Summary 
+        "permalink" .RelPermalink) }}
+    {{ end }}
+    <a href="{{ .RelPermalink }}" class="postsCarousel__expand">
+      See Posts
+    </a>
+  </section>
+{{ end }}

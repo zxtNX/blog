@@ -1,0 +1,38 @@
+baseURL = 'http://localhost:1313'
+languageCode = 'en-US'
+title = 'zxtnx - CyberLife'
+
+[[menus.main]]
+name = 'reverse-engineering'
+pageRef = '/'
+weight = 10
+
+[[menus.main]]
+name = 'game-hacking'
+pageRef = '/'
+weight = 20
+
+[[menus.main]]
+name = 'binary-exploitation'
+pageRef = '/'
+weight = 30
+
+[[menus.mobile]]
+name = 'EntityTutorials'
+pageRef = '/entity-tutorials'
+weight = 10
+
+[[menus.mobile]]
+name = 'EntityChallenges'
+pageRef = '/entity-challenges'
+weight = 20
+
+[[menus.mobile]]
+name = 'EntityWorldWide'
+pageRef = '/entity-worldwide'
+weight = 30
+
+[module]
+  [module.hugoVersion]
+    extended = false
+    min = "0.116.0"

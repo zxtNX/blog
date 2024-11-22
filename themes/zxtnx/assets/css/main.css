@@ -1,0 +1,107 @@
+@font-face {
+  font-family: "Inter";
+  src: url('/fonts/Inter-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  background-color: #121212;
+  color: #FFFFFF;
+  margin: 0;
+  padding: 0;
+}
+
+.globalMenu__desktop {
+  display: none;
+}
+
+/* Conteneur principal du menu */
+.globalFooter {
+  position:fixed;
+  left:0;
+  bottom:0;
+  width:100%;
+}
+
+/* Conteneur principal du menu */
+.globalMenu__mobile {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  z-index: 3; /* Assure que le contenu du menu reste au-dessus */
+  overflow: visible; /* Assure que les pseudo-éléments ne sont pas tronqués */
+}
+
+.globalMenu__mobile::before {
+  content: '';
+  position: absolute;
+  top: 24px;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  box-shadow: 0 26px 50px rgb(18, 18, 18), 0 -86px 0px rgb(18, 18, 18);
+  /* border-radius: 8px; */
+  filter: blur(54.20000000298023224px);
+}
+
+/* Liste alignée */
+.globalMenu__mobile .globalMenu__list {
+  display: flex;
+  width: 100%; /* Assure que la liste prend toute la largeur */
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  z-index: 2;
+}
+
+/* Chaque élément du menu */
+.globalMenu__mobile .globalMenu__item {
+  flex: 1; /* Chaque item prend une largeur égale */
+  text-align: center;
+  background-color: #4B4B4B;
+}
+
+/* Ajouter une bordure séparatrice entre les éléments */
+/* .globalMenu__item:not(:last-child) {
+  border-right: 1px solid #333;
+}*/
+
+/* Style des liens */
+.globalMenu__mobile .globalMenu__link {
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 16px;
+  display: block;
+  padding: 16px 0;
+  width: 100%;
+}
+
+/* Lien actif */
+.globalMenu__mobile .globalMenu__link--active {
+  color: #FFFFFF;
+  background-color: #7700C7;
+  /*font-weight: bold;*/
+}
+
+/* Survol */
+.globalMenu__mobile .globalMenu__link:hover {
+  color: #FFFFFF;
+  background-color: #7700C7;
+}
+
+/* Pour les écrans de petite taille (mobile), inverser l'affichage */
+@media (min-width: 768px) {
+  .globalMenu__desktop {
+      display: block;
+  }
+  .globalMenu__mobile, .globalHeadMenu__mobile {
+      display: none;
+  }
+}

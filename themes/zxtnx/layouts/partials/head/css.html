@@ -1,0 +1,12 @@
+{{ $resetStyle := resources.Get "css/reset.css" }}
+{{ $headerStyle := resources.Get "css/header.css" }}
+{{ $mainStyle := resources.Get "css/main.css" }}
+{{ $componentsStyle := resources.Get "css/components.css" }}
+{{ $CSS := slice $resetStyle $headerStyle $mainStyle $componentsStyle | resources.Concat "css/main.css" }}
+{{- if eq hugo.Environment "development" }}
+  <link rel="stylesheet" href="{{ $CSS.RelPermalink }}">
+{{- else }}
+  {{- with $CSS | minify | fingerprint }}
+    <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+  {{- end }}
+{{- end }}

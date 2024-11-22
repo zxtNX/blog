@@ -1,0 +1,11 @@
+Reverse-Engineering:
+  image: "/media/images/avatar_reverseEngineering.png"
+  alt: "Reverse Engineering Avatar"
+
+Game-Hacking:
+  image: "/media/images/avatar_gameHacking.png"
+  alt: "Game Hacking Avatar"
+
+Binary-Exploitation:
+  image: "/media/images/avatar_binaryExploitation.png"
+  alt: "Binary Exploitation Avatar"

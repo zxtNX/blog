@@ -1,0 +1,25 @@
+{{ define "main" }}
+<section>
+  <!-- Afficher le type (EntityTutorials, etc.) -->
+  <div class="post-category">
+    {{ with .Params.categories }}
+      <h2 class="category">{{ index . 0 }}</h2>
+    {{ end }}
+  </div>
+
+  <!-- Afficher le titre du post -->
+  <h1>{{ .Title }}</h1>
+
+  <!-- Afficher les tags -->
+  <div class="post-tags">
+    {{ range .Params.tags }}
+      <span class="tag">{{ . }}</span>
+    {{ end }}
+  </div>
+
+  <!-- Contenu du post -->
+  <div class="post-content">
+    {{ .Content }}
+  </div>
+</section>
+{{ end }}

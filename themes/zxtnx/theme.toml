@@ -1,0 +1,19 @@
+name = 'zxtnx'
+license = 'MIT'
+licenselink = 'https://github.com/zxtNX/repo/LICENSE'
+description = 'RE & Vulnerability Hunting, Game Hacking enjoyer'
+
+# The home page of the theme, where the source can be found
+homepage = 'https://github.com/zxtNX/repo'
+
+# If you have a running demo of the theme
+demosite = 'https://github.com/zxtNX/repo'
+
+# Taxonomy terms
+tags = ['blog', 'cybersecurity', 'reverse-engineering', 'game-hacking', 'binary-exploitation']
+features = ['tutorials', 'ctf', 'write-up', 'retex', 'news']
+
+# Author
+[author]
+  name = 'zxtnx'
+  homepage = 'zxtnx - CyberLife'
