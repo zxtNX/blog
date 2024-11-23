@@ -154,6 +154,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (heroTag) heroTag.textContent = post.Tags[0] || defaultTag;
         if (categoryLabel) categoryLabel.textContent = post.Category || defaultCategory;
 
+        // Dynamically update the postCategory block's class
+        const postCategoryBlock = document.querySelector(".postCategory");
+        if (postCategoryBlock) {
+            postCategoryBlock.className = "postCategory"; // Reset classes
+            const tagClass = post.Tags[0].toLowerCase().replace(/\s+/g, "-"); // Format the tag
+            postCategoryBlock.classList.add(tagClass); // Add the class dynamically
+        }
+
         // Met à jour l'avatar
         const avatar = avatarMap[post.Tags[0]] || avatarMap[defaultTag];
         if (heroAvatar && avatar) {
@@ -218,4 +226,24 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         applyHighlight(currentTag);
     }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Obtenez le bouton "switchLights"
+    const switchLights = document.querySelector(".switchLights");
+
+    // Vérifiez si un thème est enregistré dans localStorage
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+        document.body.classList.toggle("light-theme", savedTheme === "light");
+    }
+
+    // Ajoutez un gestionnaire de clic sur le bouton
+    switchLights.addEventListener("click", () => {
+        // Basculez entre le thème sombre et clair
+        const isLight = document.body.classList.toggle("light-theme");
+
+        // Enregistrez le thème dans localStorage
+        localStorage.setItem("theme", isLight ? "light" : "dark");
+    });
 });
