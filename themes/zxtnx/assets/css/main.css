@@ -295,11 +295,107 @@ body.binary-exploitation-selection ::selection {
   flex: 1;
 }
 
+
 .postsCarousel {
   position: fixed;
   top: 0;
   right: 0;
-  width: 16%;
+  width: 25.96%; /* Largeur fixe pour le carousel */
+  height: 100vh; /* Prend toute la hauteur de la fenêtre */
+  background: var(--color-black); /* Couleur de fond */
+  overflow: hidden; /* Masquer les débordements */
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px; /* Coins arrondis */
+  box-shadow: 0px 4px 4px 2px rgba(0, 0, 0, 0.05);
+}
+
+.postsCarousel__track {
+  display: flex;
+  flex-direction: column;
+  gap: 60px; /* Espacement vertical entre les éléments */
+  overflow-y: scroll; /* Défilement vertical */
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none; /* Masquer la barre de défilement */
+  height: 100%; /* Prend toute la hauteur */
+}
+
+.postsCarousel__track::-webkit-scrollbar {
+  display: none; /* Cache la barre de défilement */
+}
+
+.postsCarousel__post {
+  flex: 0 0 auto;
+  width: 360px; /* Largeur fixe des images */
+  height: 220px; /* Hauteur fixe des images */
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.postsCarousel__post:hover {
+  transform: scale(1.05); /* Agrandit légèrement l'élément */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.postsCarousel__thumbnailContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.postsCarousel__thumbnail {
+  width: 100%; /* Remplit le conteneur */
+  height: 100%; /* Remplit le conteneur */
+  object-fit: cover; /* Ajuste l'image tout en respectant les proportions */
+}
+
+.postsCarousel__postTitle {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.5rem;
+  background: rgba(0, 0, 0, 0.6); /* Fond semi-transparent */
+  color: var(--color-white);
+  font-size: 14px;
+  text-align: center;
+}
+
+.postsCarousel__expand {
+  position: absolute;
+  left: -18px;
+  bottom: 40.5%;
+  color: var(--color-white);
+  font-size: 14px;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 16px;
+  zoom: 1.005; /* Fix blurry text */
+  transform: rotate(90deg);
+  text-transform: uppercase;
+}
+
+.postsCarousel__expand::after {
+  /* Make a line under the text */
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: var(--color-white);
+  margin-top: 0.5rem;
+}
+
+.postsCarousel__expand:hover {
+  font-weight: bold;
+  transition: font-weight 0.2s ease;
 }
 
 #TableOfContents {

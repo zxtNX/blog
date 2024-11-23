@@ -141,16 +141,20 @@
 
         <!-- Affiche les posts en carousel -->
         <section class="postsCarousel">
-          {{ range .Site.RegularPages }}
-            {{ partial "post-carousel.html" (dict 
-              "thumbnail" .Params.thumbnail 
-              "title" .Title 
-              "summary" .Summary 
-              "permalink" .RelPermalink) }}
-          {{ end }}
-          <a href="{{ .RelPermalink }}" class="postsCarousel__expand">
-            See Posts
-          </a>
+          <div class="postsCarousel__wrapper">
+            <div class="postsCarousel__track">
+              {{ range .Site.RegularPages }}
+                {{ partial "post-carousel.html" (dict 
+                  "thumbnail" .Params.thumbnail 
+                  "title" .Title 
+                  "summary" .Summary 
+                  "permalink" .RelPermalink) }}
+              {{ end }}
+            </div>
+            <a href="{{ .RelPermalink }}" class="postsCarousel__expand">
+              See Posts
+            </a>
+          </div>
         </section>
       </section>
     {{ end }}

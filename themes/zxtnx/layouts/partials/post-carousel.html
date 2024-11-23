@@ -1,8 +1,10 @@
 <article class="postsCarousel__post">
-    {{ with .thumbnail }}
-        <img src="{{ . }}" alt="Thumbnail for {{ $.title }}" class="postsCarousel__thumbnail">
-    {{ end }}
-    <h2 class="postsCarousel__postTitle">{{ .title }}</h2>
+    <div class="postsCarousel__thumbnailContainer">
+        {{ with .thumbnail }}
+            <img src="{{ . }}" alt="Thumbnail for {{ $.title }}" class="postsCarousel__thumbnail">
+        {{ end }}
+        <h2 class="postsCarousel__postTitle">{{ .title }}</h2>
+    </div>
     <p class="postsCarousel__postDescription">{{ .summary }}</p>
     <a href="{{ .permalink }}" class="postsCarousel__postGoTo">View post</a>
 </article>
