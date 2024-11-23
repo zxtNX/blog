@@ -302,26 +302,32 @@ body.binary-exploitation-selection ::selection {
   width: 16%;
 }
 
+#TableOfContents {
+  margin-left: 36px;
+  margin-right: 26px;
+}
+
 .tableOfContents {
   position: fixed;
   right: 0;
   height: 100%;
   width: 14%;
-  background: #1c1c1c;
-  padding: 10px;
-  border-radius: 5px;
+  background: var(--color-gray-light);
   font-size: 14px;
   margin-right: 16%;
+  display: flex;
+  flex-direction: column;
 }
 
 .tableOfContents::before {
   content: "";
+  position: absolute;
   top: 0;
-  left: 10px;
-  width: 2px;
-  margin-left: 24px;
-  margin-right: 16px;
-  height: 100%;
+  left: 0;
+  width: 0.125rem;
+  margin-left: 2.25rem;
+  /* height: 100%; */
+  height: var(--toc-line-height, 0);
   background: repeating-linear-gradient(
     to bottom,
     #666,
@@ -329,21 +335,25 @@ body.binary-exploitation-selection ::selection {
     transparent 5px,
     transparent 10px
   );
-  z-index: -1;
+  margin-top: 1.625rem;
+  z-index: 2;
+}
+
+.tableOfContents h3 {
+  margin-top: 1.625rem;
+  margin-left: 3.75rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
 }
 
 .tableOfContents a {
+  color: #aaa;
   text-decoration: none;
-  color: inherit;
+  margin-bottom: 0.5rem;
 }
 
 .tableOfContents a.active {
   font-weight: bold;  
-}
-
-.tableOfContents h3 {
-  font-weight: bold;
-  margin-bottom: 10px;
 }
 
 .tableOfContents nav ul {
@@ -355,20 +365,11 @@ body.binary-exploitation-selection ::selection {
   list-style: none;
   margin: 0;
   padding: 0;
-  margin-left: 20px;
+  margin-left: 1.25rem;
 }
 
 .tableOfContents ul ul {
-  margin-left: 20px;
-}
-
-.tableOfContents nav ul li {
-  margin-bottom: 5px;
-}
-
-.tableOfContents nav ul li a {
-  color: #aaa;
-  text-decoration: none;
+  margin-left: 1.25rem;
 }
 
 .tableOfContents nav ul li a:hover {
@@ -378,11 +379,6 @@ body.binary-exploitation-selection ::selection {
 .tableOfContents nav ul li a.active {
   font-weight: bold;
   color: var(--color-white);;
-}
-
-.tableOfContents nav a {
-  color: #aaa;
-  text-decoration: none;
 }
 
 .tableOfContents nav a.active {

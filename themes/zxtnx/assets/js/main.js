@@ -47,6 +47,23 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // Fonction pour recalculer la hauteur de la ligne verticale
+    function updateTocLineHeight() {
+        const toc = document.querySelector(".tableOfContents");
+        const lastLink = toc?.querySelector("nav ul li:last-child a");
+
+        if (toc && lastLink) {
+            const tocRect = toc.getBoundingClientRect();
+            const lastLinkRect = lastLink.getBoundingClientRect();
+
+            // Calcul de la hauteur dynamique
+            const height = lastLinkRect.bottom - tocRect.top + 26;
+
+            // Appliquer la hauteur calculée à la ligne verticale
+            toc.style.setProperty("--toc-line-height", `${height}px`);
+        }
+    }
+
     // Fonction pour mettre en surbrillance la section active
     function highlightActiveSection(tocLinks) {
         let closestSection = null;
@@ -103,7 +120,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     
         // Surveiller la section active pendant le défilement
-        window.addEventListener("scroll", () => highlightActiveSection(tocLinks));
+        window.addEventListener("scroll", () => {
+            highlightActiveSection(tocLinks);
+            updateTocLineHeight(); // Recalcule la ligne à chaque défilement
+        });
     }    
 
     // Fonction pour mettre à jour la table des matières
@@ -119,6 +139,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Configure les liens pour défiler vers les sections
         setupTocLinks();
+
+        // Recalcule la hauteur de la ligne
+        updateTocLineHeight();
     }
 
     // Fonction pour charger un post
@@ -226,24 +249,8 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         applyHighlight(currentTag);
     }
+
+    // Initialisation de la ligne verticale
+    updateTocLineHeight();
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-    // Obtenez le bouton "switchLights"
-    const switchLights = document.querySelector(".switchLights");
-
-    // Vérifiez si un thème est enregistré dans localStorage
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-        document.body.classList.toggle("light-theme", savedTheme === "light");
-    }
-
-    // Ajoutez un gestionnaire de clic sur le bouton
-    switchLights.addEventListener("click", () => {
-        // Basculez entre le thème sombre et clair
-        const isLight = document.body.classList.toggle("light-theme");
-
-        // Enregistrez le thème dans localStorage
-        localStorage.setItem("theme", isLight ? "light" : "dark");
-    });
-});
