@@ -254,3 +254,30 @@ document.addEventListener("DOMContentLoaded", () => {
     updateTocLineHeight();
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+    // Sélection du bouton
+    const switchLights = document.querySelector(".switchLights");
+    
+    // Vérifie si l'élément existe
+    if (!switchLights) {
+      console.warn("Le bouton switchLights n'a pas été trouvé.");
+      return;
+    }
+  
+    // Vérifie si un thème est enregistré dans localStorage
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      document.body.classList.toggle("light-theme", savedTheme === "light");
+    }
+  
+    // Ajoute un gestionnaire de clic
+    switchLights.addEventListener("click", () => {
+      // Bascule entre les thèmes
+      const isLight = document.body.classList.toggle("light-theme");
+  
+      // Enregistre le choix de l'utilisateur dans localStorage
+      localStorage.setItem("theme", isLight ? "light" : "dark");
+    });
+  });
+
+  

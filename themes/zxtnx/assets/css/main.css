@@ -60,7 +60,7 @@ body.light-theme .tableOfContents nav a.active {
 }
 
 body.light-theme .tableOfContents a {
-  color: #555;
+  color: var(--color-background);
 }
 
 body.light-theme .postNavigation__prev,
@@ -269,14 +269,14 @@ body.binary-exploitation-selection ::selection {
 /* Lien actif */
 .globalMenu__mobile .globalMenu__link--active {
   color: var(--color-white);
-  background-color: #7700C7;
+  background-color: var(--color-primary);
   /*font-weight: bold;*/
 }
 
 /* Survol */
 .globalMenu__mobile .globalMenu__link:hover {
   color: var(--color-white);
-  background-color: #7700C7;
+  background-color: var(--color-primary);
 }
 
 .latestPost {
@@ -324,18 +324,12 @@ body.binary-exploitation-selection ::selection {
   position: absolute;
   top: 0;
   left: 0;
-  width: 0.125rem;
+  width: 1px; /* Largeur fine pour afficher la répétition des images */
   margin-left: 2.25rem;
-  /* height: 100%; */
-  height: var(--toc-line-height, 0);
-  background: repeating-linear-gradient(
-    to bottom,
-    #666,
-    #666 5px,
-    transparent 5px,
-    transparent 10px
-  );
-  margin-top: 1.625rem;
+  height: var(--toc-line-height, 0); /* Hauteur dynamique */
+  background-image: url('/media/images/dot_texture.PNG');
+  background-size: 1px 4px; /* Taille de chaque point et espace */
+  margin-top: 1.725rem;
   z-index: 2;
 }
 
@@ -347,7 +341,7 @@ body.binary-exploitation-selection ::selection {
 }
 
 .tableOfContents a {
-  color: #aaa;
+  color: var(--color-white);
   text-decoration: none;
   margin-bottom: 0.5rem;
 }
