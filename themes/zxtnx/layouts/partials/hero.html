@@ -1,23 +1,27 @@
-<div class="postCategory">
-    <span class="postCategory__title">{{ .Category }}</span>
-</div>
-<header class="hero">
-    <div class="hero__currentPostDescription">
-        <h1 class="hero__title">zxtnx</h1>
-        <p class="hero__tag">{{ .Tag }}</p>
-        <p class="hero_tagDescription">
-        To defend against an enemy, one must first understand their tactics.
-        </p>
+<div class="mainHeaderPlaceholder"></div>
+<div class="mainHeaderContainer">
+    <div class="postCategory">
+        <span class="postCategory__title">{{ .Category }}</span>
     </div>
-    <div class="hero__avatarContainer">
-        <img src="{{ .AvatarImage }}" alt="{{ .AvatarAlt }}" class="hero__avatarImage" data-category="{{ .Category }}">
-        <div class="hero__avatarSocials">
-        <a href="https://github.com/zxtNX" class="hero__avatarSocialsLink" target="_blank">
-            <img src="/media/images/github.svg" alt="GitHub" class="hero__avatarSocialsIcon">
-        </a>
-        <a href="https://www.root-me.org/Vokaeiz" class="hero__avatarSocialsLink" target="_blank">
-            <img src="/media/images/root-me.svg" alt="Root-Me" class="hero__avatarSocialsIcon">
-        </a>
+    <header class="hero">
+        <div class="hero__currentPostDescription">
+            <h1 class="hero__title">zxtnx</h1>
+            <p class="hero__tag">{{ .Tag }}</p>
+            <p class="hero_tagDescription">
+            To defend against an enemy, one must first understand their tactics.
+            </p>
         </div>
-    </div>
-</header>
+        <div class="hero__avatarContainer">
+            <img src="{{ .AvatarImage }}" alt="{{ .AvatarAlt }}" class="hero__avatarImage" data-category="{{ .Category }}">
+            <div class="hero__avatarSocials">
+            <a href="https://github.com/zxtNX" class="hero__avatarSocialsLink" target="_blank">
+                <img src="/media/images/github.svg" alt="GitHub" class="hero__avatarSocialsIcon">
+            </a>
+            <a href="https://www.root-me.org/Vokaeiz" class="hero__avatarSocialsLink" target="_blank">
+                <img src="/media/images/root-me.svg" alt="Root-Me" class="hero__avatarSocialsIcon">
+            </a>
+            </div>
+        </div>
+    </header>
+</div>
+

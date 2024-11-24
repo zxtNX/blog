@@ -259,7 +259,23 @@
           localStorage.setItem("theme", isLight ? "light" : "dark");
         });
       };
-  
+      
+      const addScrollClassToMainHeaderContainer = () => {
+        const header = document.querySelector(".mainHeaderContainer");
+
+        const toggleShadowOnScroll = () => {
+            if (window.scrollY > 0) {
+                header.classList.add("scrolled");
+            } else {
+                header.classList.remove("scrolled");
+            }
+        };
+
+        window.addEventListener("scroll", toggleShadowOnScroll);
+      };
+
+      addScrollClassToMainHeaderContainer();
+      
       // Initialisation des données filtrées
       updateFilteredPosts();
   

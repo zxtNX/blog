@@ -12,6 +12,7 @@
   --color-white: #FFFFFF;
   --color-black: #202020;
   --color-gray-light: #1E1E1E;
+  --mainHeaderHeight: 324.5px;
 }
 
 @font-face {
@@ -129,13 +130,34 @@ body.binary-exploitation-selection ::selection {
   padding-right: 27.6%;
 }
 
+.mainHeaderPlaceholder {
+  height: var(--mainHeaderHeight, auto);
+}
+
+.mainHeaderContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--mainHeaderHeight, auto);
+  padding-right: 27.6%;
+  z-index: 10;
+  background-color: var(--color-background);
+  transition: box-shadow 0.3s ease;
+}
+
+.mainHeaderContainer.scrolled {
+  box-shadow: 0px 4px 4px 2px rgba(0, 0, 0, 0.05);
+}
+
 .hero {
   margin-top: 32px;
   margin-left: 88px;
   margin-right: 46px;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start; /* Aligne les deux blocs en haut */
+  align-items: flex-start;
+  z-index: 11;
 }
 
 .hero__avatarContainer {
@@ -144,6 +166,7 @@ body.binary-exploitation-selection ::selection {
   align-items: center;
   gap: 18px; /* Ajoute un espacement propre entre l'avatar et les réseaux sociaux */
   margin-bottom: 38px;
+  z-index: 11;
 }
 
 .hero__avatarSocials {
@@ -155,15 +178,15 @@ body.binary-exploitation-selection ::selection {
 }
 
 .hero__avatarSocialsIcon {
-  width: 32px; /* Taille exacte pour éviter tout redimensionnement */
+  width: 32px;
   height: 32px;
-  object-fit: contain; /* S'assure que l'image reste nette */
+  object-fit: contain;
   display: block;
 }
 
 .hero__avatarImage {
   display: block; /* Facultatif, pour garantir le centrage dans le flux */
-  margin: 0 auto; /* Centrer horizontalement */
+  margin: 0 auto;
 }
 
 .hero__title {
@@ -175,7 +198,7 @@ body.binary-exploitation-selection ::selection {
   position: relative;
   font-size: 24px;
   margin-bottom: 10px;
-  display: inline-block; /* Nécessaire pour ajuster la largeur */
+  display: inline-block;
 }
 
 .hero__tag::after {
@@ -190,15 +213,15 @@ body.binary-exploitation-selection ::selection {
 
 /* Couleur par tag */
 .hero__tag.reverse-engineering::after {
-  background-color: var(--color-primary); /* Couleur violette */
+  background-color: var(--color-primary);
 }
 
 .hero__tag.game-hacking::after {
-  background-color: var(--color-blue); /* Couleur bleue */
+  background-color: var(--color-blue);
 }
 
 .hero__tag.binary-exploitation::after {
-  background-color: var(--color-red); /* Couleur rouge */
+  background-color: var(--color-red);
 }
 
 .postCategory {
