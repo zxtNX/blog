@@ -219,36 +219,112 @@
       initThemeSwitcher();
       setupCarouselClicks();
 
-      let sliderWrap = document.querySelector('.postsCarousel__wrapper');
-      let slider = document.querySelector('.postsCarousel__track');
-      let clonesWidth = 0;
-      let sliderWidth = 0;
-      let clones = [];
-      let disableScroll = false;
-      let scrollPos = 0;
-
+      let sliderWrap = document.querySelector('.postsCarousel__track');
+      let wrapper = document.querySelector('.postsCarousel__wrapper');
       let items = [...document.querySelectorAll('.postsCarousel__post')];
-      let images = [...document.querySelectorAll('.postsCarousel__thumbnailContainer img')];
-      images.forEach((image) => {
-        // Récupère le permalink depuis l'attribut `data-permalink`
-        const permalink = image.dataset.permalink;
-      
-        // Trouve le post correspondant dans `postsData` (pas `filteredPosts`)
-        const normalizedPermalink = permalink.replace(/\/$/, "").toLowerCase();
-        const matchingPost = postsData.find((post) =>
-          post.RelPermalink.replace(/\/$/, "").toLowerCase() === normalizedPermalink
-        );
-      
-        if (matchingPost) {
-          image.src = matchingPost.Thumbnail || "default-thumbnail.png";
-        } else {
-          console.warn(`Aucun post correspondant pour le permalink : ${permalink}`);
-          image.src = "default-thumbnail.png"; // Placeholder si aucune correspondance
-        }
-      });
+      let currentTranslate = 0;
+      const defaultSpeed = 0.33;
+      let scrollSpeed = defaultSpeed;
+      let isDragging = false;
+      let startY = 0;
+      let lastY = 0;
 
-      console.log("Posts Data:", postsData.map((post) => post.RelPermalink));
-      console.log("Image Permalink:", images.map((img) => img.dataset.permalink));      
+      function createClones() {
+        for (let i = 0; i < 3; i++) {
+          items.forEach(item => {
+            const clone = item.cloneNode(true);
+            clone.classList.add('js-clone');
+            sliderWrap.appendChild(clone);
+          });
+        }
+        
+        items.forEach(item => {
+          const clone = item.cloneNode(true);
+          clone.classList.add('js-clone');
+          sliderWrap.insertBefore(clone, sliderWrap.firstChild);
+        });
+      }
+
+      function getContentHeight() {
+        const singleSetHeight = items.reduce((total, item) => {
+          return total + item.offsetHeight + 60;
+        }, 0);
+        return singleSetHeight;
+      }
+
+      function resetPosition() {
+        const contentHeight = getContentHeight();
+        if (Math.abs(currentTranslate) >= contentHeight * 2) {
+          currentTranslate = -contentHeight;
+        } else if (currentTranslate > 0) {
+          currentTranslate = -contentHeight;
+        }
+      }
+
+      function animate() {
+        if (!isDragging) {
+          currentTranslate -= scrollSpeed;
+        }
+        resetPosition();
+        sliderWrap.style.transform = `translateY(${currentTranslate}px)`;
+        requestAnimationFrame(animate);
+      }
+
+      function handleMouseDown(e) {
+        isDragging = true;
+        startY = e.clientY;
+        lastY = e.clientY;
+        wrapper.style.cursor = 'grabbing';
+        scrollSpeed = 0;
+      }
+
+      function handleMouseMove(e) {
+        if (!isDragging) return;
+        
+        const deltaY = e.clientY - lastY;
+        currentTranslate += deltaY;
+        lastY = e.clientY;
+      }
+
+      function handleMouseUp() {
+        isDragging = false;
+        wrapper.style.cursor = 'grab';
+
+        // Réinitialise la vitesse à la valeur de base
+        scrollSpeed = defaultSpeed; // Même valeur que celle définie au début
+      }
+
+      function initCarousel() {
+        currentTranslate = -getContentHeight();
+        sliderWrap.style.transform = `translateY(${currentTranslate}px)`;
+        
+        createClones();
+        
+        // Événements déplacés sur le wrapper
+        wrapper.addEventListener('mousedown', handleMouseDown);
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('mouseup', handleMouseUp);
+        
+        // Style du curseur sur le wrapper
+        wrapper.style.cursor = 'grab';
+        
+        wrapper.addEventListener('mouseenter', () => {
+          if (!isDragging) scrollSpeed = 0;
+        });
+
+        wrapper.addEventListener('mouseleave', () => {
+          if (!isDragging) scrollSpeed = defaultSpeed;
+          if (isDragging) {
+            handleMouseUp();
+          }
+        });
+
+        wrapper.addEventListener('selectstart', e => e.preventDefault());
+        
+        requestAnimationFrame(animate);
+      }
+
+      initCarousel();
     });
   })();
 

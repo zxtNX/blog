@@ -33,6 +33,7 @@ body {
   padding: 0;
   min-height: 100vh;
   overflow-x: hidden;
+  overscroll-behavior-y: none;
   box-sizing: border-box;
 }
 
@@ -338,19 +339,44 @@ body.binary-exploitation-selection ::selection {
   position: absolute;
   height: 100%;
   width: 100%;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+  cursor: grab;
+  scrollbar-width: none; /* Cache la barre de défilement */
+}
+
+.postsCarousel__wrapper::-webkit-scrollbar {
+  display: none; /* Cache la barre de défilement */
+}
+
+.postsCarousel__post,
+.postsCarousel__thumbnail,
+.postsCarousel__thumbnailContainer {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  pointer-events: auto;
 }
 
 .postsCarousel__track {
   position: absolute;
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 60px;
   align-items: center;
   justify-content: center;
-  height: 100%;
   will-change: transform;
-  pointer-events: none;
+  pointer-events: auto;
   transition: top 0.4s ease;
+  -webkit-user-drag: none; /* Empêche le drag par défaut */
 }
 
 .postsCarousel__track::-webkit-scrollbar {
@@ -363,7 +389,8 @@ body.binary-exploitation-selection ::selection {
   height: 23.53%;
   overflow: hidden;
   position: relative;
-  cursor: pointer;
+  cursor: grab;
+  user-select: none; /* Empêche la sélection de texte */
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
