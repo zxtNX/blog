@@ -33,6 +33,7 @@ body {
   padding: 0;
   min-height: 100vh;
   overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 /* Thème clair */
@@ -295,32 +296,61 @@ body.binary-exploitation-selection ::selection {
   flex: 1;
 }
 
-
 .postsCarousel {
   position: fixed;
   top: 0;
   right: 0;
-  width: 25.96%; /* Largeur fixe pour le carousel */
-  height: 100vh; /* Prend toute la hauteur de la fenêtre */
-  background: var(--color-black); /* Couleur de fond */
-  overflow: hidden; /* Masquer les débordements */
+  width: 27.536%;
+  height: 100vh; /* Prend toute la hauteur */
+  background: var(--color-black);
+  overflow: hidden; /* Masque les parties hautes et basses */
   z-index: 10;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  border-radius: 10px; /* Coins arrondis */
+  justify-content: flex-start;
+  clip-path: inset(-10px 0px); /* Cache les débordements */
   box-shadow: 0px 4px 4px 2px rgba(0, 0, 0, 0.05);
 }
 
+/**
+ * On cache les éléments enfants de .postsCarousel__post
+ * sauf .postsCarousel__thumbnailContainer
+**/
+.postsCarousel__post > * {
+  display: none;
+}
+
+.postsCarousel__post > .postsCarousel__thumbnailContainer {
+  display: block;
+}
+/** End **/
+
+/**
+ * On affiche l'élément .active de .postsCarousel__post
+**/
+.postsCarousel__post > *.active {
+  display: block;
+}
+/** End **/
+
+.postsCarousel__wrapper {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
 .postsCarousel__track {
+  position: absolute;
   display: flex;
   flex-direction: column;
-  gap: 60px; /* Espacement vertical entre les éléments */
-  overflow-y: scroll; /* Défilement vertical */
-  scroll-snap-type: y mandatory;
-  scrollbar-width: none; /* Masquer la barre de défilement */
-  height: 100%; /* Prend toute la hauteur */
+  gap: 60px;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  will-change: transform;
+  pointer-events: none;
+  transition: top 0.4s ease;
 }
 
 .postsCarousel__track::-webkit-scrollbar {
@@ -329,9 +359,8 @@ body.binary-exploitation-selection ::selection {
 
 .postsCarousel__post {
   flex: 0 0 auto;
-  width: 360px; /* Largeur fixe des images */
-  height: 220px; /* Hauteur fixe des images */
-  border-radius: 8px;
+  width: 72.873%;
+  height: 23.53%;
   overflow: hidden;
   position: relative;
   cursor: pointer;
@@ -369,12 +398,9 @@ body.binary-exploitation-selection ::selection {
 
 .postsCarousel__expand {
   position: absolute;
-  left: -18px;
-  bottom: 40.5%;
+  left: -13px;
+  bottom: 50%;
   color: var(--color-white);
-  font-size: 14px;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
   text-align: center;
   cursor: pointer;
   font-size: 16px;

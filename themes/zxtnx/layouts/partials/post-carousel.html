@@ -1,7 +1,7 @@
 <article class="postsCarousel__post">
     <div class="postsCarousel__thumbnailContainer">
         {{ with .thumbnail }}
-            <img src="{{ . }}" alt="Thumbnail for {{ $.title }}" class="postsCarousel__thumbnail">
+            <img src="{{ . }}" alt="Thumbnail for {{ $.title }}" class="postsCarousel__thumbnail" data-permalink="{{ $.permalink }}">
         {{ end }}
         <h2 class="postsCarousel__postTitle">{{ .title }}</h2>
     </div>

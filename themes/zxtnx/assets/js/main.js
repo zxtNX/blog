@@ -218,6 +218,38 @@
       // Initialisation des événements
       initThemeSwitcher();
       setupCarouselClicks();
+
+      let sliderWrap = document.querySelector('.postsCarousel__wrapper');
+      let slider = document.querySelector('.postsCarousel__track');
+      let clonesWidth = 0;
+      let sliderWidth = 0;
+      let clones = [];
+      let disableScroll = false;
+      let scrollPos = 0;
+
+      let items = [...document.querySelectorAll('.postsCarousel__post')];
+      let images = [...document.querySelectorAll('.postsCarousel__thumbnailContainer img')];
+      images.forEach((image) => {
+        // Récupère le permalink depuis l'attribut `data-permalink`
+        const permalink = image.dataset.permalink;
+      
+        // Trouve le post correspondant dans `postsData` (pas `filteredPosts`)
+        const normalizedPermalink = permalink.replace(/\/$/, "").toLowerCase();
+        const matchingPost = postsData.find((post) =>
+          post.RelPermalink.replace(/\/$/, "").toLowerCase() === normalizedPermalink
+        );
+      
+        if (matchingPost) {
+          image.src = matchingPost.Thumbnail || "default-thumbnail.png";
+        } else {
+          console.warn(`Aucun post correspondant pour le permalink : ${permalink}`);
+          image.src = "default-thumbnail.png"; // Placeholder si aucune correspondance
+        }
+      });
+
+      console.log("Posts Data:", postsData.map((post) => post.RelPermalink));
+      console.log("Image Permalink:", images.map((img) => img.dataset.permalink));      
     });
   })();
+
   
