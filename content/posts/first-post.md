@@ -5,6 +5,7 @@ draft: false
 categories: ["EntityTutorials"]
 tags: ["Reverse-Engineering"]
 thumbnail: "/media/images/posts/post1-ET_RE_th.png"
+summary: 'This summary is independent of the content.'
 ---
 # Few tips to master IDA Pro
 

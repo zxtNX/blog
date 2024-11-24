@@ -5,6 +5,7 @@ draft: false
 categories: ["EntityTutorials"]
 tags: ["Reverse-Engineering"]
 thumbnail: "/media/images/posts/post4-ET_RE_th.png"
+summary: 'This summary is independent of the content.'
 ---
 # Contenu du quatrième post.
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed feugiat quam, at facilisis ex. Fusce volutpat dictum massa. Fusce id nunc tincidunt, pharetra nunc ac, scelerisque orci. Cras pellentesque, sapien sit amet rhoncus luctus, lacus erat dapibus arcu, scelerisque lacinia sem libero quis neque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam ligula dui, interdum in vestibulum nec, faucibus at velit. Suspendisse porttitor tortor metus, vitae finibus mauris hendrerit quis. Vestibulum scelerisque, lacus nec feugiat varius, augue risus laoreet ipsum, eget elementum dolor ante in ligula. Quisque euismod vel ligula sit amet dignissim. Vestibulum efficitur dui id ullamcorper faucibus.

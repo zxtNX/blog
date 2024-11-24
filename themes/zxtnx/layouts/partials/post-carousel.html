@@ -3,8 +3,11 @@
         {{ with .thumbnail }}
             <img src="{{ . }}" alt="Thumbnail for {{ $.title }}" class="postsCarousel__thumbnail" data-permalink="{{ $.permalink }}">
         {{ end }}
-        <h2 class="postsCarousel__postTitle">{{ .title }}</h2>
+        <h2 class="postsCarousel__postTitleBefore">{{ .title }}</h2>
     </div>
-    <p class="postsCarousel__postDescription">{{ .summary }}</p>
-    <a href="{{ .permalink }}" class="postsCarousel__postGoTo">View post</a>
+    <div class="postsCarousel__hoverContainer">
+        <h2 class="postsCarousel__postTitle">{{ .title }}</h2>
+        <p class="postsCarousel__postDescription">{{ .summary }}</p>
+        <a href="{{ .permalink }}" class="postsCarousel__postGoTo">View post</a>
+    </div>
 </article>

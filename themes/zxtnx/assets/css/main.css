@@ -314,27 +314,6 @@ body.binary-exploitation-selection ::selection {
   box-shadow: 0px 4px 4px 2px rgba(0, 0, 0, 0.05);
 }
 
-/**
- * On cache les éléments enfants de .postsCarousel__post
- * sauf .postsCarousel__thumbnailContainer
-**/
-.postsCarousel__post > * {
-  display: none;
-}
-
-.postsCarousel__post > .postsCarousel__thumbnailContainer {
-  display: block;
-}
-/** End **/
-
-/**
- * On affiche l'élément .active de .postsCarousel__post
-**/
-.postsCarousel__post > *.active {
-  display: block;
-}
-/** End **/
-
 .postsCarousel__wrapper {
   position: absolute;
   height: 100%;
@@ -405,22 +384,126 @@ body.binary-exploitation-selection ::selection {
   height: 100%;
 }
 
+.postsCarousel__thumbnailContainer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.39) 100%);
+  pointer-events: none; /* Pour que le dégradé n'interfère pas avec les clics */
+}
+
 .postsCarousel__thumbnail {
   width: 100%; /* Remplit le conteneur */
   height: 100%; /* Remplit le conteneur */
   object-fit: cover; /* Ajuste l'image tout en respectant les proportions */
 }
 
-.postsCarousel__postTitle {
+.postsCarousel__postTitleBefore {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 100%;
-  padding: 0.5rem;
-  background: rgba(0, 0, 0, 0.6); /* Fond semi-transparent */
+  padding: 1.5rem;
+  width: calc(100% - 3rem);
+  padding-bottom: 1.5rem;
+  color: var(--color-white);
+  font-size: 24px;
+  font-weight: bold;
+  text-align: left;
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+  z-index: 3;
+  will-change: transform;
+}
+
+.postsCarousel__postTitle {
+  position: relative;
+  padding-bottom: 1.5rem;
+  width: calc(100% - 3rem);
+  padding-bottom: 1.5rem;
+  color: var(--color-white);
+  font-size: 24px;
+  font-weight: bold;
+  text-align: left;
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+  z-index: 3;
+  will-change: transform;
+}
+
+.postsCarousel__hoverContainer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: calc(100% - 3rem);
+  padding: 1.5rem;
+  transform: translateY(100%);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 2;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.postsCarousel__post:hover .postsCarousel__postTitleBefore {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.2s, opacity 0.2s linear;
+}
+
+.postsCarousel__post:hover .postsCarousel__postTitle {
+  bottom: 45%;
+}
+
+.postsCarousel__post:hover .postsCarousel__hoverContainer {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.postsCarousel__postDescription {
+  margin: 0 0 1rem 0;
+  color: var(--color-white);
+}
+
+.postsCarousel__postDescription {
+  margin-bottom: 16px;
+}
+
+.postsCarousel__postGoTo {
+  display: inline-block;
+  padding: 8px 16px;
+  background: var(--color-black);
   color: var(--color-white);
   font-size: 14px;
-  text-align: center;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+}
+
+.postsCarousel__postGoTo:hover {
+  background: var(--color-white);
+  color: var(--color-black);
+}
+
+.postsCarousel__postDescription,
+.postsCarousel__postGoTo {
+  transform: translateY(20px); /* Décalage initial vers le bas */
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+
+.postsCarousel__post:hover .postsCarousel__hoverContainer {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.postsCarousel__post:hover .postsCarousel__postDescription,
+.postsCarousel__post:hover .postsCarousel__postGoTo {
+  transform: translateY(0); /* Remonte au hover */
+  opacity: 1;
+  transition-delay: 0.1s; /* Léger délai pour un effet cascade */
 }
 
 .postsCarousel__expand {
