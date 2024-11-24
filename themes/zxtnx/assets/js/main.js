@@ -50,7 +50,7 @@
       };
   
       // Fonction pour charger un post à un index donné
-      const loadPost = (index) => {
+      const loadPost = async (index) => {
         if (!filteredPosts.length) {
           console.warn("Aucun post disponible.");
           return;
@@ -63,7 +63,20 @@
   
         const post = filteredPosts[index];
         currentIndex = index;
-  
+        
+        // On utilise latestPost__container depuis elements
+        const container = elements.postContent.closest('.latestPost__container');
+        
+        // D'abord faire disparaître le contenu actuel
+        container.classList.add('post-fading');
+        
+        // Attendre la fin de l'animation de disparition
+        await new Promise(resolve => {
+            container.addEventListener('animationend', () => {
+                resolve();
+            }, { once: true });
+        });
+
         // Mise à jour des éléments DOM dynamiques
         if (elements.postTitle) elements.postTitle.textContent = post.Title;
         if (elements.postDate) elements.postDate.textContent = new Date(post.Date).toLocaleDateString();
@@ -98,6 +111,14 @@
           post.Title,
           post.RelPermalink
         );
+
+        container.classList.remove('post-fading');
+        container.classList.add('post-appearing');
+    
+        // Nettoyer la classe d'apparition après l'animation
+        container.addEventListener('animationend', () => {
+            container.classList.remove('post-appearing');
+        }, { once: true }); // L'event listener se supprime automatiquement après exécution
       };
   
       // Fonction pour mettre à jour la Table of Contents

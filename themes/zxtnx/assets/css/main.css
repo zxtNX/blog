@@ -196,12 +196,6 @@ body.binary-exploitation-selection ::selection {
   background-color: var(--color-gray-dark);
 }
 
-/* Ajouter une bordure séparatrice entre les éléments */
-/* .globalMenu__item:not(:last-child) {
-  border-right: 1px solid #333;
-}*/
-
-
 .postNavigation {
   display: flex;
   gap: 24px;
@@ -289,6 +283,32 @@ body.binary-exploitation-selection ::selection {
 
 .leftContainer {
   width: 14%;
+}
+
+@keyframes fadeOut {
+  from {
+      opacity: 1;
+  }
+  to {
+      opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}
+
+.post-fading {
+  animation: fadeOut 0.3s ease-out forwards;
+}
+
+.post-appearing {
+  animation: fadeIn 0.3s ease-in forwards;
 }
 
 .latestPost__container {
@@ -395,6 +415,16 @@ body.binary-exploitation-selection ::selection {
   pointer-events: none; /* Pour que le dégradé n'interfère pas avec les clics */
 }
 
+/* Au hover, on intensifie le gradient et on le monte plus haut */
+.postsCarousel__post:hover .postsCarousel__thumbnailContainer::after {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.6) 0%,    /* Plus sombre et commence plus haut */
+    rgba(0, 0, 0, 0.8) 50%,   /* Gradient intermédiaire */
+    rgba(0, 0, 0, 0.9) 100%   /* Plus sombre en bas */
+  );
+}
+
 .postsCarousel__thumbnail {
   width: 100%; /* Remplit le conteneur */
   height: 100%; /* Remplit le conteneur */
@@ -464,9 +494,6 @@ body.binary-exploitation-selection ::selection {
 .postsCarousel__postDescription {
   margin: 0 0 1rem 0;
   color: var(--color-white);
-}
-
-.postsCarousel__postDescription {
   margin-bottom: 16px;
 }
 
