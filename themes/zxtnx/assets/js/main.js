@@ -48,7 +48,48 @@
   
         if (tagClassMap[tag]) document.body.classList.add(tagClassMap[tag]);
       };
-  
+      
+      // Fonction pour mettre à jour l'avatar en fonction du tag
+      const updateAvatar = (tag) => {
+        const heroAvatarImage = document.querySelector(".hero__avatarImage");
+        if (!heroAvatarImage) return;
+
+        // Mapping des fichiers d'avatars
+        const avatarMap = {
+          "Reverse-Engineering": "/media/images/avatar_reverseEngineering.png",
+          "Game-Hacking": "/media/images/avatar_gameHacking.png",
+          "Binary-Exploitation": "/media/images/avatar_binaryExploitation.png",
+        };
+
+        // Mettre à jour l'avatar si le tag existe dans le mapping
+        if (avatarMap[tag]) {
+          heroAvatarImage.src = avatarMap[tag];
+          heroAvatarImage.alt = `Avatar for ${tag}`;
+        } else {
+          console.warn("Avatar non trouvé pour le tag :", tag);
+        }
+      };
+
+      // Fonction pour mettre à jour la classe de la ligne sous hero__tag
+      const updateHeroTagStyle = (tag) => {
+        const heroTag = document.querySelector(".hero__tag");
+        if (!heroTag) return;
+
+        // Réinitialiser les classes spécifiques
+        heroTag.classList.remove("reverse-engineering", "game-hacking", "binary-exploitation");
+
+        // Ajouter la classe correspondante
+        const tagClassMap = {
+          "Reverse-Engineering": "reverse-engineering",
+          "Game-Hacking": "game-hacking",
+          "Binary-Exploitation": "binary-exploitation",
+        };
+
+        if (tagClassMap[tag]) {
+          heroTag.classList.add(tagClassMap[tag]);
+        }
+      };
+
       // Fonction pour charger un post à un index donné
       const loadPost = async (index) => {
         if (!filteredPosts.length) {
@@ -64,15 +105,14 @@
         const post = filteredPosts[index];
         currentIndex = index;
         
-        // On utilise latestPost__container depuis elements
-        const container = elements.postContent.closest('.latestPost__container');
-        
+      
         // D'abord faire disparaître le contenu actuel
-        container.classList.add('post-fading');
-        
+        const mainContent = document.querySelector('.mainContent')
+        mainContent.classList.add('page-fading');
+
         // Attendre la fin de l'animation de disparition
         await new Promise(resolve => {
-            container.addEventListener('animationend', () => {
+            mainContent.addEventListener('animationend', () => {
                 resolve();
             }, { once: true });
         });
@@ -87,7 +127,12 @@
           elements.postThumbnail.alt = post.Thumbnail ? `Thumbnail for ${post.Title}` : "No thumbnail";
         }
   
-        if (elements.heroTag) elements.heroTag.textContent = post.Tags[0] || defaultTag;
+        if (elements.heroTag) {
+          elements.heroTag.textContent = post.Tags[0] || defaultTag;
+          updateHeroTagStyle(post.Tags[0]);
+          updateAvatar(currentTag);
+        }
+
         if (elements.categoryLabel) elements.categoryLabel.textContent = post.Category || defaultCategory;
   
         // Mise à jour dynamique de la classe du bloc postCategory
@@ -112,13 +157,12 @@
           post.RelPermalink
         );
 
-        container.classList.remove('post-fading');
-        container.classList.add('post-appearing');
-    
-        // Nettoyer la classe d'apparition après l'animation
-        container.addEventListener('animationend', () => {
-            container.classList.remove('post-appearing');
-        }, { once: true }); // L'event listener se supprime automatiquement après exécution
+        mainContent.classList.remove('page-fading');
+        mainContent.classList.add('page-appearing');
+
+        mainContent.addEventListener('animationend', () => {
+          mainContent.classList.remove('page-appearing');
+        }, { once: true });
       };
   
       // Fonction pour mettre à jour la Table of Contents

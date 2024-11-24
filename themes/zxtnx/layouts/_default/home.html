@@ -116,14 +116,16 @@
 
         <!-- Article principal -->
         <article class="latestPost__container">
+          <!-- Afficher le titre -->
+          <h1 class="latestPost__title">{{ $latestPost.Title }}</h1>
+          <p class="latestPost__date">
+            {{ $latestPost.Date.Format "2 January 2006" }}
+          </p>
+
           <!-- Afficher la thumbnail -->
           {{ with $latestPost.Params.thumbnail }}
             <img src="{{ . }}" alt="Thumbnail for {{ $latestPost.Title }}" class="latestPost__thumbnail">
           {{ end }}
-
-          <!-- Afficher le titre -->
-          <h1 class="latestPost__title">{{ $latestPost.Title }}</h1>
-          <p>{{ $latestPost.Date.Format "2 January 2006" }}</p>
 
           <!-- Contenu du post -->
           <div class="latestPost__content">
