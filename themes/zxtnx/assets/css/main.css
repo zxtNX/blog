@@ -132,11 +132,38 @@ body.binary-exploitation-selection ::selection {
 .hero {
   margin-top: 32px;
   margin-left: 88px;
-  margin-bottom: 110px;
   margin-right: 46px;
   display: flex;
   justify-content: space-between;
+  align-items: flex-start; /* Aligne les deux blocs en haut */
+}
+
+.hero__avatarContainer {
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 18px; /* Ajoute un espacement propre entre l'avatar et les réseaux sociaux */
+  margin-bottom: 38px;
+}
+
+.hero__avatarSocials {
+  display: flex;
+  justify-content: space-between;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 8px;
+}
+
+.hero__avatarSocialsIcon {
+  width: 32px; /* Taille exacte pour éviter tout redimensionnement */
+  height: 32px;
+  object-fit: contain; /* S'assure que l'image reste nette */
+  display: block;
+}
+
+.hero__avatarImage {
+  display: block; /* Facultatif, pour garantir le centrage dans le flux */
+  margin: 0 auto; /* Centrer horizontalement */
 }
 
 .hero__title {
